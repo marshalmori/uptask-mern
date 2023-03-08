@@ -40,6 +40,16 @@ const autenticar = async (req, res) => {
   }
 
   // Verificar a senha (password)
+  if (await usuario.comprobarPassword(password)) {
+    res.json({
+      _id: usuario._id,
+      nombre: usuario.nombre,
+      email: usuario.email,
+    });
+  } else {
+    const error = new Error("Senha incorreta.");
+    return res.status(403).json({ msg: error.message });
+  }
 };
 
 export { registrar, autenticar };
