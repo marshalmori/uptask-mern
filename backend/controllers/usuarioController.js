@@ -22,4 +22,6 @@ const registrar = async (req, res) => {
   res.json({ msg: "Criar usuário" });
 };
 
-export { registrar };
+const autenticar = async (req, res) => {};
+
+export { registrar, autenticar };
