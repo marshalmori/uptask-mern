@@ -22,6 +22,24 @@ const registrar = async (req, res) => {
   res.json({ msg: "Criar usuário" });
 };
 
-const autenticar = async (req, res) => {};
+const autenticar = async (req, res) => {
+  const { email, password } = req.body;
+
+  //Verificar se o usuário existeUsuario
+  const usuario = await Usuario.findOne({ email });
+
+  if (!usuario) {
+    const error = new Error("Usuário não existe.");
+    return res.status(404).json({ msg: error.message });
+  }
+
+  //Verificar se o usuário confirmou o cadastro (email recebido pelo usuário)
+  if (!usuario.confirmado) {
+    const error = new Error("Sua conta não foi confirmada.");
+    return res.status(403).json({ msg: error.message });
+  }
+
+  // Verificar a senha (password)
+};
 
 export { registrar, autenticar };
