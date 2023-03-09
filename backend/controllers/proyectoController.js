@@ -1,6 +1,14 @@
 import Proyecto from "../models/Proyecto.js";
 
-const obtenerProyectos = async (req, res) => {};
+const obtenerProyectos = async (req, res) => {
+  const proyectos = await Proyecto.find().where("creador").equals(req.usuario);
+
+  if (proyectos.length === 0) {
+    const error = new Error("Nenhum projeto foi criado.");
+    return res.status(400).json({ msg: error.message });
+  }
+  res.json(proyectos);
+};
 
 const nuevoProyecto = async (req, res) => {
   const proyecto = new Proyecto(req.body);
