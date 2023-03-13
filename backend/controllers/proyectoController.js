@@ -52,7 +52,7 @@ const editarProyecto = async (req, res) => {
 
   if (proyecto.creador.toString() !== req.usuario._id.toString()) {
     const error = new Error("Acción No Válida");
-    return res.status(401).json({ msg: error.message });
+    return res.status(403).json({ msg: error.message });
   }
 
   proyecto.nombre = req.body.nombre || proyecto.nombre;
