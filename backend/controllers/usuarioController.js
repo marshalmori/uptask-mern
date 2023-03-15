@@ -7,20 +7,22 @@ const registrar = async (req, res) => {
   const existeUsuario = await Usuario.findOne({ email });
 
   if (existeUsuario) {
-    const error = new Error("Usuário já cadastrado.");
+    const error = new Error("Usuario ya registrado");
     return res.status(400).json({ msg: error.message });
   }
 
   try {
     const usuario = new Usuario(req.body);
     usuario.token = generarId();
-    const usuarioAlmacenado = await usuario.save();
-    res.json(usuarioAlmacenado);
+    await usuario.save();
+    res.json({
+      msg: "Usuario Creado Correctamente. Revisa tu Email para confirmar tu cuenta.",
+    });
   } catch (error) {
     console.log(error);
   }
 
-  res.json({ msg: "Criar usuário" });
+  // res.json({ msg: "Criar usuário" });
 };
 
 const autenticar = async (req, res) => {

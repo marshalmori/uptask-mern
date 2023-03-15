@@ -10,8 +10,6 @@ const Registrar = () => {
   const [repetirPassword, setRepetirPassword] = useState("");
   const [alerta, setAlerta] = useState({});
 
-  const { msg } = alerta;
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -43,15 +41,20 @@ const Registrar = () => {
 
     //Crear el usuario en la API
     try {
-      const respuesta = await axios.post("http://localhost:4000/api/usuarios", {
+      const { data } = await axios.post("http://localhost:4000/api/usuarios", {
         nombre,
         email,
         password,
       });
 
-      console.log(respuesta);
-    } catch (error) {}
+      setAlerta({ msg: data.msg, error: false });
+    } catch (error) {
+      setAlerta({ msg: error.response.data.msg, error: true });
+      console.log(error.response.data.msg);
+    }
   };
+
+  const { msg } = alerta;
 
   return (
     <>
@@ -96,7 +99,7 @@ const Registrar = () => {
             placeholder="Email de Registro"
             className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
             value={email}
-            onChange={(e) => setEmail(e.target.email)}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
 
