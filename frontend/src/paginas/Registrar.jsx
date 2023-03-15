@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Alerta from "../components/Alerta";
+import axios from "axios";
 
 const Registrar = () => {
   const [nombre, setNombre] = useState("");
@@ -11,7 +12,7 @@ const Registrar = () => {
 
   const { msg } = alerta;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if ([nombre, email, password, repetirPassword].includes("")) {
@@ -41,7 +42,15 @@ const Registrar = () => {
     setAlerta({});
 
     //Crear el usuario en la API
-    console.log("Creando usuario");
+    try {
+      const respuesta = await axios.post("http://localhost:4000/api/usuarios", {
+        nombre,
+        email,
+        password,
+      });
+
+      console.log(respuesta);
+    } catch (error) {}
   };
 
   return (
@@ -127,7 +136,7 @@ const Registrar = () => {
 
         <input
           type="submit"
-          value="Iniciar Sesión"
+          value="Crear cuenta"
           className="bg-sky-600 w-full mb-5 py-3 text-white uppercase font-bold rounded hover:cursor-pointer hover:bg-sky-900 transition-colors"
         />
       </form>
