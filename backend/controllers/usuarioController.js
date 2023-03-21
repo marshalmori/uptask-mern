@@ -41,13 +41,14 @@ const autenticar = async (req, res) => {
   const usuario = await Usuario.findOne({ email });
 
   if (!usuario) {
-    const error = new Error("Usuário não existe.");
+    const error = new Error("El Usuario no existe.");
+
     return res.status(404).json({ msg: error.message });
   }
 
   //Verificar se o usuário confirmou o cadastro (email recebido pelo usuário)
   if (!usuario.confirmado) {
-    const error = new Error("Sua conta não foi confirmada.");
+    const error = new Error("Tu cuenta no ha sido confirmada");
     return res.status(403).json({ msg: error.message });
   }
 
@@ -60,7 +61,7 @@ const autenticar = async (req, res) => {
       token: generarJWT(usuario._id),
     });
   } else {
-    const error = new Error("Senha incorreta.");
+    const error = new Error("El password es incorrecto");
     return res.status(403).json({ msg: error.message });
   }
 };

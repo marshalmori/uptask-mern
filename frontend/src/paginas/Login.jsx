@@ -20,7 +20,20 @@ const Login = () => {
     }
 
     try {
-    } catch (error) {}
+      const { data } = await clienteAxios.post("/usuarios/login", {
+        email,
+        password,
+      });
+
+      setAlerta({});
+
+      localStorage.setItem("token", data.token);
+    } catch (error) {
+      setAlerta({
+        msg: error.response.data.msg,
+        error: true,
+      });
+    }
   };
 
   const { msg } = alerta;
