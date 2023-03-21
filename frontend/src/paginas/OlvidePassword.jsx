@@ -12,6 +12,7 @@ const OlvidePassword = () => {
 
     if (email === "" || email.length < 6) {
       setAlerta({ msg: "El email es obligatorio", error: true });
+      return;
     }
 
     try {
