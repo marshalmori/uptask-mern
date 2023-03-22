@@ -7,9 +7,9 @@ const ProyectosProvider = ({ children }) => {
   const [proyectos, setProyectos] = useState([]);
 
   return (
-    <ProyectoContext.Provider value={{ proyectos }}>
+    <ProyectosContext.Provider value={{ proyectos }}>
       {children}
-    </ProyectoContext.Provider>
+    </ProyectosContext.Provider>
   );
 };
 
