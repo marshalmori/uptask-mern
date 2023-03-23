@@ -53,6 +53,8 @@ const ProyectosProvider = ({ children }) => {
 
       const { data } = await clienteAxios.post("/proyectos", proyecto, config);
 
+      setProyectos([...proyectos, data]);
+
       setAlerta({
         msg: "Proyecto Creado Correctamente",
         error: false,
@@ -67,9 +69,32 @@ const ProyectosProvider = ({ children }) => {
     }
   };
 
+  const obtenerProyecto = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await clienteAxios(`/proyectos/${id}`, config);
+      console.log(data);
+    } catch (error) {}
+  };
+
   return (
     <ProyectosContext.Provider
-      value={{ proyectos, mostrarAlerta, alerta, submitProyecto }}
+      value={{
+        proyectos,
+        mostrarAlerta,
+        alerta,
+        submitProyecto,
+        obtenerProyecto,
+      }}
     >
       {children}
     </ProyectosContext.Provider>

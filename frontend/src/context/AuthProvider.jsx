@@ -29,7 +29,7 @@ const AuthProvider = ({ children }) => {
         // Lembrando que por padrão no axios a requisição é do tipo GET
         const { data } = await clienteAxios("/usuarios/perfil", config);
         setAuth(data);
-        navigate("/proyectos");
+        // navigate("/proyectos");
       } catch (error) {
         setAuth({});
       }
