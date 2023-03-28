@@ -20,7 +20,12 @@ const ModalFormularioTarea = () => {
     mostrarAlerta,
     alerta,
     submitTarea,
+    tarea,
   } = useProyectos();
+
+  useEffect(() => {
+    console.log(tarea);
+  }, [tarea]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
