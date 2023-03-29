@@ -53,6 +53,7 @@ const ModalFormularioTarea = () => {
     }
 
     await submitTarea({
+      id,
       nombre,
       descripcion,
       fechaEntrega,
@@ -60,6 +61,7 @@ const ModalFormularioTarea = () => {
       proyecto: params.id,
     });
 
+    setId("");
     setNombre("");
     setDescripcion("");
     setFechaEntrega("");
