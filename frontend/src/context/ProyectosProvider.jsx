@@ -11,6 +11,7 @@ const ProyectosProvider = ({ children }) => {
   const [cargando, setCargando] = useState(false);
   const [modalFormularioTarea, setModalFormularioTarea] = useState(false);
   const [tarea, setTarea] = useState({});
+  const [modalEliminarTarea, setModalEliminarTarea] = useState(false);
 
   const navigate = useNavigate();
 
@@ -230,7 +231,11 @@ const ProyectosProvider = ({ children }) => {
         config
       );
 
-      // TODO: Actualizar el DOM
+      const proyetoActualizado = { ...proyecto };
+      proyetoActualizado.tareas = proyetoActualizado.tareas.map((tareaState) =>
+        tareaState._id === data._id ? data : tareaState
+      );
+      setProyecto(proyetoActualizado);
 
       setAlerta({});
       setModalFormularioTarea(false);
@@ -242,6 +247,11 @@ const ProyectosProvider = ({ children }) => {
   const handleModalEditarTarea = (tarea) => {
     setTarea(tarea);
     setModalFormularioTarea(true);
+  };
+
+  const handleModalEliminarTarea = (tarea) => {
+    setTarea(tarea);
+    setModalEliminarTarea(!modalEliminarTarea);
   };
 
   return (
@@ -260,6 +270,8 @@ const ProyectosProvider = ({ children }) => {
         submitTarea,
         handleModalEditarTarea,
         tarea,
+        modalEliminarTarea,
+        handleModalEliminarTarea,
       }}
     >
       {children}
