@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import FormularioColaborador from "../components/FormularioColaborador";
 import useProyectos from "../hooks/useProyectos";
 import { useParams } from "react-router-dom";
+import Alerta from "../components/Alerta";
 
 const NuevoColaborador = () => {
   const {
@@ -10,6 +11,7 @@ const NuevoColaborador = () => {
     cargando,
     colaborador,
     agregarColaborador,
+    alerta,
   } = useProyectos();
   const params = useParams();
 
@@ -17,7 +19,9 @@ const NuevoColaborador = () => {
     obtenerProyecto(params.id);
   }, []);
 
-  if (cargando) return "cargando...";
+  // if (cargando) return "cargando...";
+
+  if (!proyecto?._id) return <Alerta alerta={alerta} />;
 
   return (
     <>
