@@ -7,20 +7,21 @@ const agregarTarea = async (req, res) => {
   const existeProyecto = await Proyecto.findById(proyecto);
 
   if (!existeProyecto) {
-    const error = new Error("El Proyecto no existe.");
+    const error = new Error("El Proyecto no existe");
     return res.status(404).json({ msg: error.message });
   }
 
   if (existeProyecto.creador.toString() !== req.usuario._id.toString()) {
-    const error = new Error("No tienes los permisos par añadir tareas.");
-    return res.status(404).json({ msg: error.message });
+    const error = new Error("No tienes los permisos para añadir tareas");
+    return res.status(403).json({ msg: error.message });
   }
 
   try {
     const tareaAlmacenada = await Tarea.create(req.body);
-    res.json(tareaAlmacenada);
+    // Almacenar el ID en el proyecto
     existeProyecto.tareas.push(tareaAlmacenada._id);
     await existeProyecto.save();
+    res.json(tareaAlmacenada);
   } catch (error) {
     console.log(error);
   }
@@ -88,11 +89,9 @@ const eliminarTarea = async (req, res) => {
   }
 
   try {
-    const proyecto = await Proyecto.findById(tarea.Proyecto);
+    const proyecto = await Proyecto.findById(tarea.proyecto);
     proyecto.tareas.pull(tarea._id);
-
     await Promise.allSettled([await proyecto.save(), await tarea.deleteOne()]);
-
     res.json({ msg: "La Tarea se eliminó" });
   } catch (error) {
     console.log(error);
